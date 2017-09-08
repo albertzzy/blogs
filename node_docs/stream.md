@@ -11,8 +11,8 @@
 
 ### 四种类型
 
-1. Readable - 可读的流 (例如 fs.createReadStream()).
-2. Writable - 可写的流 (例如 fs.createWriteStream()).
+1. Readable - 可读的流 (例如 fs.createReadStream()).   必须实现  _read([size])  方法  
+2. Writable - 可写的流 (例如 fs.createWriteStream()).  必须实现  _write([size]) 方法 ， _writev() 用来一次处理缓存池重的所有模块
 3. Duplex - 可读写的流 (例如 net.Socket).
 4. Transform - 在读写过程中可以修改和变换数据的 Duplex 流 (例如 zlib.createDeflate())
 
