@@ -8,7 +8,6 @@
 
 
 
-
 ### 四种类型
 
 1. Readable - 可读的流 (例如 fs.createReadStream()).   必须实现  _read([size])  方法  
