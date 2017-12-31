@@ -32,7 +32,8 @@ const mapStateToProps = state => {
 
 
 多个container在某些情况下实现优化
-1. 
+1. 只要你感觉一个父组件里有很多的action 是要传给子组件的，则应该分离出一个container component出来。
+
 
 
 
