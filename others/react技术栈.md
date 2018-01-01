@@ -29,7 +29,7 @@ const mapStateToProps = state => {
 ```
 
 
-* 给 ```js mapStateToProps ``` 加速,还是使用 Reselect这个库
+* 给 ```js mapStateToProps ``` 加速,还是使用 **Reselect**这个库
 
 
 * 多个container在某些情况下实现优化
@@ -49,6 +49,10 @@ function mapStateToProps(state) {
   }
 }
 ```
+4. 不要在dumb components中使用immutable,因此smart 传给domb component的props 需要经过hoc 转换
+
+> 要配合使用immutable,需要借助**redux-immutable**,这个库重写了combineReducer的逻辑，因为原来的combineReducer操作的是原生的js对象，而immutable js 对象需要用到对应api.这也是store 不能直接是immutable的原因。
+
 
 
 
