@@ -55,6 +55,15 @@ function mapStateToProps(state) {
 
 
 
+## 异步处理
+1. 不使用中间件
+2. redux-thunk
+3. redux-promise --- 相比较redux-thunk,actionCreator 里没有dispatch,getState,即没有pending/start 状态。
+4. redux-saga
+
+
+
+
 
 
 
