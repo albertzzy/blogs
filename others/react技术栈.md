@@ -58,8 +58,26 @@ function mapStateToProps(state) {
 ## 异步处理
 1. 不使用中间件
 2. redux-thunk
-3. redux-promise --- 相比较redux-thunk,actionCreator 里没有dispatch,getState,即没有pending/start 状态。
+3. redux-promise
+    相比较redux-thunk,actionCreator 里没有dispatch,getState,即没有pending/start 状态。
 4. redux-saga
+    1. task cancellation : 取消task ,subtask 也会取消，这样一级级往下。和错误冒泡一级级往上方向相反。
+       yield cancel(task) 不会等待cancel task 完成。行为类似fork。cancel 一旦初始化，就返回了。
+       race / parallel effect 都会隐士出发cancel.
+
+    2. 可以yield call(generator 或者 task) ，其中call(task) 可以用来组合，即会触发task 下的所有        generator ;fork 也一样。
+
+    3. fork model（fork(task/generator)）: 主进程会阻塞到子进程都完成后。行为具有parallel一样的语义。
+       所以只要有一个子进程失败了，主进程就会失败，其他子进程即使还在pending,也会被cancel。错误会冒泡到主进程。**你不能在子进程里catch到error**;
+       然后你cancel 主进程会cancel掉所有子进程。
+       相反的（detached fork即spawn(task/generator)）主进程不会阻塞到子进程都完成，子进程具有独立的context,子进程的错误也不会冒泡到主进程。cancel 主进程也不会cancel 掉所有子进程。
+       
+    4. takeLatest 就是防抖。race 可以用来限流。
+
+
+
+
+
 
 
 
