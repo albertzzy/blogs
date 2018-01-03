@@ -75,6 +75,12 @@ function mapStateToProps(state) {
 
     4. takeLatest 就是防抖。race 可以用来限流。
 
+    5. actionChannel buffer 多个store action
+    6. eventChannel buffer 多个 event
+
+
+
+
 ```javascript
 
 const throttle = (pattern, saga, ...args) => fork(function*() {
@@ -111,7 +117,7 @@ const throttle = (pattern, saga, ...args) => fork(function*() {
   >限流经常用于input事件（需多次触发的事件，但需要减少触发次数），防抖用于按钮点击（只触发一次的事件）
 
 
-
+   
 
 
 
