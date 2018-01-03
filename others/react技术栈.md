@@ -70,9 +70,47 @@ function mapStateToProps(state) {
     3. fork model（fork(task/generator)）: 主进程会阻塞到子进程都完成后。行为具有parallel一样的语义。
        所以只要有一个子进程失败了，主进程就会失败，其他子进程即使还在pending,也会被cancel。错误会冒泡到主进程。**你不能在子进程里catch到error**;
        然后你cancel 主进程会cancel掉所有子进程。
+
        相反的（detached fork即spawn(task/generator)）主进程不会阻塞到子进程都完成，子进程具有独立的context,子进程的错误也不会冒泡到主进程。cancel 主进程也不会cancel 掉所有子进程。
-       
+
     4. takeLatest 就是防抖。race 可以用来限流。
+
+```javascript
+
+const throttle = (pattern, saga, ...args) => fork(function*() {
+    let countdown = 0;
+    let last = Date.now();
+    let lastAction;
+
+    while(true){
+
+        const winner = yield race({
+            task : yield take(pattern),
+            timeout : countdown ? yield call(delay,countdown) : null
+        })
+        
+        let cur = Date.now();
+        countdown = wait - (cur-last);
+        
+        if(winner.task){
+            lastAction = winner.task;
+        }
+
+        if(countdown<=0 && lastAction){
+            // do sth about task
+
+            last = cur;
+            lastAction = undefined;
+
+        }
+    }
+
+})
+
+```
+  >限流经常用于input事件（需多次触发的事件，但需要减少触发次数），防抖用于按钮点击（只触发一次的事件）
+
+
 
 
 
