@@ -122,6 +122,16 @@ const throttle = (pattern, saga, ...args) => fork(function*() {
   >限流经常用于input事件（需多次触发的事件，但需要减少触发次数），防抖用于按钮点击（只触发一次的事件）
 
 
+
+
+## 一些redux bundlers(将reducer,selector,action creators三者放在一起)
+1. redux-bundler
+2. kea
+3. dva
+4. ...
+
+
+
    
 
 
