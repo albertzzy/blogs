@@ -1,6 +1,23 @@
 ## redux-bundler
 1. 将 `reducer` , `selector`, `actionCreator` 三者放在一个bundle里。多个bundle最后compose成一个trunk。
 2. 每个bundle中会定义几个selector 来watch这些selector对应的store值。当watch的这些值改变的时候就触发相应的`subscription.fn`。这部分逻辑是根据`store.subscribe(()=>{..watch logics..})`来做的。里面给store加了一个方法`store.subscribeToSelectors` 和 `store.subscribeToAllChanges` 来做订阅。
+3. `Object.assign(store, bindActionCreators(processed.actionCreators, store.dispatch))`这段代码是说`store[actionCreator的name]`可以直接dispatch 这个action. 
+4. 类似的
+```js
+ const bindSelectorsToStore = (store, selectors) => {
+  for (const key in selectors) {
+    const selector = selectors[key]
+    if (!store[key]) {
+      store[key] = () =>
+        selector(store.getState())
+    }
+  }
+}
+```
+这段代码是说store[selector的name] 可以返回一个方法，这个方法返回selector的值。
+
+
+
 
 ### 相关apis
 1. `reducer` 来定义reducer , `getReducer` 来返回reducer.
